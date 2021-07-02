@@ -595,7 +595,7 @@ export default Kapsule({
     console.log('hellooooooo')
 
     const graph = ngraph.graph();
-
+    let layout;
     state.graphData.nodes.forEach(node => { graph.addNode(node[state.nodeId]); });
     state.graphData.links.forEach(link => { graph.addLink(link.source, link.target); });
     layout = ngraph.forcelayout(graph, { dimensions: state.numDimensions, ...state.ngraphPhysics });
