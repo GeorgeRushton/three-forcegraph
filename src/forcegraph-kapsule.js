@@ -1074,6 +1074,7 @@ export default Kapsule({
         );
       } else {
         // ngraph
+        console.log('hello - you managed to find me!')
         const graph = ngraph.graph();
         state.graphData.nodes.forEach(node => { graph.addNode(node[state.nodeId]); });
         state.graphData.links.forEach(link => { graph.addLink(link.source, link.target); });
