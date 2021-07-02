@@ -1086,12 +1086,12 @@ export default Kapsule({
         );
       } else {
         // ngraph
-        console.log('hello - you managed to find me!')
+        console.log('hello - you managed to find me new!')
         //const graph = ngraph.graph();
-        state.graphData.nodes.forEach(node => { state.layout.graph.addNode(node[state.nodeId]); });
-        state.graphData.links.forEach(link => { state.layout.graph.addLink(link.source, link.target); });
-        layout = ngraph.forcelayout(state.layout.graph, { dimensions: state.numDimensions, ...state.ngraphPhysics });
-        layout.graph = state.layout.graph; // Attach graph reference to layout
+        //state.graphData.nodes.forEach(node => { state.layout.graph.addNode(node[state.nodeId]); });
+        //state.graphData.links.forEach(link => { state.layout.graph.addLink(link.source, link.target); });
+        //layout = ngraph.forcelayout(state.layout.graph, { dimensions: state.numDimensions, ...state.ngraphPhysics });
+        //layout.graph = state.layout.graph; // Attach graph reference to layout
       }
 
       for (
