@@ -592,9 +592,12 @@ export default Kapsule({
   init(threeObj, state) {
     // Main three object to manipulate
     state.graphScene = threeObj;
+    console.log('hellooooooo')
   },
 
   update(state, changedProps) {
+
+    console.log('yo yo yo yo yo yo')
     const hasAnyPropChanged = propList => propList.some(p => changedProps.hasOwnProperty(p));
 
     state.engineRunning = false; // pause simulation
