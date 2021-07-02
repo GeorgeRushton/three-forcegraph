@@ -593,6 +593,15 @@ export default Kapsule({
     // Main three object to manipulate
     state.graphScene = threeObj;
     console.log('hellooooooo')
+
+    const graph = ngraph.graph();
+
+    state.graphData.nodes.forEach(node => { graph.addNode(node[state.nodeId]); });
+    state.graphData.links.forEach(link => { graph.addLink(link.source, link.target); });
+    layout = ngraph.forcelayout(graph, { dimensions: state.numDimensions, ...state.ngraphPhysics });
+    layout.graph = graph; // Attach graph reference to layout
+    state.layout = layout
+
   },
 
   update(state, changedProps) {
@@ -1078,11 +1087,11 @@ export default Kapsule({
       } else {
         // ngraph
         console.log('hello - you managed to find me!')
-        const graph = ngraph.graph();
-        state.graphData.nodes.forEach(node => { graph.addNode(node[state.nodeId]); });
-        state.graphData.links.forEach(link => { graph.addLink(link.source, link.target); });
-        layout = ngraph.forcelayout(graph, { dimensions: state.numDimensions, ...state.ngraphPhysics });
-        layout.graph = graph; // Attach graph reference to layout
+        //const graph = ngraph.graph();
+        state.graphData.nodes.forEach(node => { state.layout.graph.addNode(node[state.nodeId]); });
+        state.graphData.links.forEach(link => { state.layout.graph.addLink(link.source, link.target); });
+        layout = ngraph.forcelayout(state.layout.graph, { dimensions: state.numDimensions, ...state.ngraphPhysics });
+        layout.graph = state.layout.graph; // Attach graph reference to layout
       }
 
       for (
