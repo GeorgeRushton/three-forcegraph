@@ -48,10 +48,29 @@ import {
   forceRadial as d3ForceRadial
 } from 'd3-force-3d';
 
-import graph from 'ngraph.graph';
-import forcelayout from 'ngraph.forcelayout';
-const ngraph = { graph, forcelayout };
-const mygraph = ngraph.graph();
+//import graph from 'ngraph.graph';
+//import forcelayout from 'ngraph.forcelayout';
+//const ngraph = { graph, forcelayout };
+// const mygraph = ngraph.graph();
+var createGraph = require('ngraph.graph') // empty graph
+var createLayout = require('ngraph.layout') // layout of empty graph
+var my_graph = createGraph();
+my_graph.addLink(1,2)
+my_graph.addLink(1,3)
+//var my_layout = createLayout(my_graph);
+// Configure
+var physicsSettings = {
+  timeStep: 0.5,
+  dimensions: 3,
+  gravity: -12,
+  theta: 0.8,
+  springLength: 10,
+  springCoefficient: 0.8,
+  dragCoefficient: 0.9,
+};
+
+// pass it as second argument to layout:
+var my_layout = require('ngraph.forcelayout')(my_graph, physicsSettings);
 
 import Kapsule from 'kapsule';
 import accessorFn from 'accessor-fn';
@@ -1080,10 +1099,10 @@ export default Kapsule({
         // ngraph
         console.log('ngraph update layout method')
         //const graph = ngraph.graph();
-        state.graphData.nodes.forEach(node => { mygraph.addNode(node[state.nodeId]); });
-        state.graphData.links.forEach(link => { mygraph.addLink(link.source, link.target); });
-        layout = ngraph.forcelayout(mygraph, { dimensions: state.numDimensions, ...state.ngraphPhysics });
-        layout.graph = mygraph; // Attach graph reference to layout
+        //state.graphData.nodes.forEach(node => { mygraph.addNode(node[state.nodeId]); });
+        //state.graphData.links.forEach(link => { mygraph.addLink(link.source, link.target); });
+        //layout = ngraph.forcelayout(mygraph, { dimensions: state.numDimensions, ...state.ngraphPhysics });
+        //layout.graph = mygraph; // Attach graph reference to layout
       }
 
       for (
@@ -1092,9 +1111,11 @@ export default Kapsule({
         i++
       ) {
         layout[isD3Sim ? "tick" : "step"]();
+        my_layout["step"]();
       } // Initial ticks before starting to render
 
-      state.layout = layout;
+//      state.layout = layout;
+      state.layout = my_layout
       this.resetCountdown();
     }
 
