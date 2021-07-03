@@ -53,7 +53,7 @@ import {
 //const ngraph = { graph, forcelayout };
 // const mygraph = ngraph.graph();
 var createGraph = require('ngraph.graph') // empty graph
-var createLayout = require('ngraph.layout') // layout of empty graph
+//var createLayout = require('ngraph.layout') // layout of empty graph
 var my_graph = createGraph();
 my_graph.addLink(1,2)
 my_graph.addLink(1,3)
