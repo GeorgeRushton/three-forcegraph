@@ -58,6 +58,9 @@ var my_graph = createGraph();
 my_graph.addLink(1,2)
 my_graph.addLink(1,3)
 
+console.log('my graph at init')
+console.log(my_graph)
+
 //var my_layout = createLayout(my_graph);
 // Configure
 var physicsSettings = {
@@ -72,6 +75,9 @@ var physicsSettings = {
 
 // pass it as second argument to layout:
 var my_layout = require('ngraph.forcelayout')(my_graph, physicsSettings);
+console.log('my layout at init:')
+console.log(my_layout)
+
 
 var my_count = 3;
 
@@ -1103,7 +1109,11 @@ export default Kapsule({
         // ngraph
         console.log('ngraph update layout method')
         ++my_count
+        console.log('my_graph pre addLink')
+        console.log(my_graph)
         my_graph.addLink(my_count,my_count-1)
+        console.log('my_graph post addLink')
+        console.log(my_graph)
         //const graph = ngraph.graph();
         //state.graphData.nodes.forEach(node => { mygraph.addNode(node[state.nodeId]); });
         //state.graphData.links.forEach(link => { mygraph.addLink(link.source, link.target); });
@@ -1116,13 +1126,25 @@ export default Kapsule({
         i < state.warmupTicks && !(isD3Sim && state.d3AlphaMin > 0 && state.d3ForceLayout.alpha() < state.d3AlphaMin);
         i++
       ) {
-        layout[isD3Sim ? "tick" : "step"]();
+        //layout[isD3Sim ? "tick" : "step"]();
+        console.log('about to do a step')
         my_layout["step"]();
       } // Initial ticks before starting to render
 
 //      state.layout = layout;
+      console.log('about to set state.layout: my_graph')
+      console.log(my_graph)
+      console.log('about to set state.layout: my_layout')
+      console.log(my_layout)
+
+      console.log('now setting my_layout.graph = my_graph')
+      my_layout.graph = my_graph
+      console.log('this is the state layout prior to update')
+      console.log(state.layout)
       state.layout = my_layout
-      my_layout.graph = mygraph
+      console.log('this is the new state layout')
+      console.log(state.layoutt)
+
       this.resetCountdown();
     }
 
