@@ -61,10 +61,13 @@ var physicsSettings = {
 import graph from 'ngraph.graph';
 import forcelayout from 'ngraph.forcelayout';
 import createLayout from 'pixel.layout'
-const ngraph = { graph, forcelayout };
+const ngraph = { graph, createLayout };
+
 
 const my_graph = ngraph.graph();
-const layout = ngraph.forcelayout(my_graph, { dimensions: 3, physicsSettings });
+const layout = ngraph.createLayout(my_graph, { dimensions: 3, physicsSettings });
+// const my_graph = ngraph.graph();
+// const layout = ngraph.forcelayout(my_graph, { dimensions: 3, physicsSettings });
 
 import Kapsule from 'kapsule';
 import accessorFn from 'accessor-fn';
@@ -1027,7 +1030,7 @@ export default Kapsule({
 
       // Feed data to force-directed layout
       const isD3Sim = state.forceEngine !== 'ngraph';
-      let layout;
+
       if (isD3Sim) {
         // D3-force
         (layout = state.d3ForceLayout)
