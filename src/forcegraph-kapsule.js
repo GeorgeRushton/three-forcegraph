@@ -57,6 +57,7 @@ var createGraph = require('ngraph.graph') // empty graph
 var my_graph = createGraph();
 my_graph.addLink(1,2)
 my_graph.addLink(1,3)
+
 //var my_layout = createLayout(my_graph);
 // Configure
 var physicsSettings = {
@@ -71,6 +72,9 @@ var physicsSettings = {
 
 // pass it as second argument to layout:
 var my_layout = require('ngraph.forcelayout')(my_graph, physicsSettings);
+
+var my_count = 3;
+
 
 import Kapsule from 'kapsule';
 import accessorFn from 'accessor-fn';
@@ -1098,6 +1102,8 @@ export default Kapsule({
       } else {
         // ngraph
         console.log('ngraph update layout method')
+        ++my_count
+        my_graph.addLink(my_count,my_count-1)
         //const graph = ngraph.graph();
         //state.graphData.nodes.forEach(node => { mygraph.addNode(node[state.nodeId]); });
         //state.graphData.links.forEach(link => { mygraph.addLink(link.source, link.target); });
@@ -1116,6 +1122,7 @@ export default Kapsule({
 
 //      state.layout = layout;
       state.layout = my_layout
+      my_layout.graph = mygraph
       this.resetCountdown();
     }
 
