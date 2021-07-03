@@ -55,8 +55,6 @@ import {
 var createGraph = require('ngraph.graph') // empty graph
 //var createLayout = require('ngraph.layout') // layout of empty graph
 var my_graph = createGraph();
-my_graph.addLink(1,2)
-my_graph.addLink(1,3)
 
 console.log('my graph at init')
 console.log(my_graph)
@@ -1109,14 +1107,14 @@ export default Kapsule({
         // ngraph
         console.log('ngraph update layout method')
         ++my_count
-        console.log('my_graph pre addLink')
-        console.log(my_graph)
-        my_graph.addLink(my_count,my_count-1)
-        console.log('my_graph post addLink')
-        console.log(my_graph)
+        //console.log('my_graph pre addLink')
+        //  console.log(my_graph)
+        //my_graph.addLink(my_count,my_count-1)
+        //console.log('my_graph post addLink')
+        //console.log(my_graph)
         //const graph = ngraph.graph();
         //state.graphData.nodes.forEach(node => { mygraph.addNode(node[state.nodeId]); });
-        //state.graphData.links.forEach(link => { mygraph.addLink(link.source, link.target); });
+        state.graphData.links.forEach(link => { my_graph.addLink(link.source, link.target); });
         //layout = ngraph.forcelayout(mygraph, { dimensions: state.numDimensions, ...state.ngraphPhysics });
         //layout.graph = mygraph; // Attach graph reference to layout
       }
