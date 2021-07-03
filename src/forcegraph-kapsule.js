@@ -48,11 +48,22 @@ import {
   forceRadial as d3ForceRadial
 } from 'd3-force-3d';
 
+var physicsSettings = {
+  timeStep: 0.5,
+  dimensions: 2,
+  gravity: -12,
+  theta: 0.8,
+  springLength: 10,
+  springCoefficient: 0.8,
+  dragCoefficient: 0.9,
+};
+
 import graph from 'ngraph.graph';
 import forcelayout from 'ngraph.forcelayout';
 const ngraph = { graph, forcelayout };
 
 const my_graph = ngraph.graph();
+const layout = ngraph.forcelayout(my_graph, { dimensions: 3, physicsSettings });
 
 import Kapsule from 'kapsule';
 import accessorFn from 'accessor-fn';
@@ -1079,7 +1090,7 @@ export default Kapsule({
 
         state.graphData.nodes.forEach(node => { my_graph.addNode(node[state.nodeId]); });
         state.graphData.links.forEach(link => { my_graph.addLink(link.source, link.target); });
-        layout = ngraph.forcelayout(my_graph, { dimensions: state.numDimensions, ...state.ngraphPhysics });
+        //layout = ngraph.forcelayout(my_graph, { dimensions: state.numDimensions, ...state.ngraphPhysics });
         layout.graph = my_graph; // Attach graph reference to layout
       }
 
