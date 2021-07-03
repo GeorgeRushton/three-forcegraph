@@ -60,6 +60,7 @@ var physicsSettings = {
 
 import graph from 'ngraph.graph';
 import forcelayout from 'ngraph.forcelayout';
+import createLayout from 'pixel.layout'
 const ngraph = { graph, forcelayout };
 
 const my_graph = ngraph.graph();
