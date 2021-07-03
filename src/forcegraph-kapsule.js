@@ -1139,11 +1139,13 @@ export default Kapsule({
 
       console.log('now setting my_layout.graph = my_graph')
       my_layout.graph = my_graph
+
       console.log('this is the state layout prior to update')
       console.log(state.layout)
       state.layout = my_layout
       console.log('this is the new state layout')
-      console.log(state.layoutt)
+      console.log(state.layout)
+
 
       this.resetCountdown();
     }
