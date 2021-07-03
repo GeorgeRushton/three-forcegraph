@@ -52,6 +52,8 @@ import graph from 'ngraph.graph';
 import forcelayout from 'ngraph.forcelayout';
 const ngraph = { graph, forcelayout };
 
+const my_graph = ngraph.graph();
+
 import Kapsule from 'kapsule';
 import accessorFn from 'accessor-fn';
 
@@ -1074,11 +1076,11 @@ export default Kapsule({
         );
       } else {
         // ngraph
-        const graph = ngraph.graph();
-        state.graphData.nodes.forEach(node => { graph.addNode(node[state.nodeId]); });
-        state.graphData.links.forEach(link => { graph.addLink(link.source, link.target); });
-        layout = ngraph.forcelayout(graph, { dimensions: state.numDimensions, ...state.ngraphPhysics });
-        layout.graph = graph; // Attach graph reference to layout
+
+        state.graphData.nodes.forEach(node => { my_graph.addNode(node[state.nodeId]); });
+        state.graphData.links.forEach(link => { my_graph.addLink(link.source, link.target); });
+        layout = ngraph.forcelayout(my_graph, { dimensions: state.numDimensions, ...state.ngraphPhysics });
+        layout.graph = my_graph; // Attach graph reference to layout
       }
 
       for (
