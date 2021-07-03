@@ -48,37 +48,9 @@ import {
   forceRadial as d3ForceRadial
 } from 'd3-force-3d';
 
-//import graph from 'ngraph.graph';
-//import forcelayout from 'ngraph.forcelayout';
-//const ngraph = { graph, forcelayout };
-// const mygraph = ngraph.graph();
-var createGraph = require('ngraph.graph') // empty graph
-//var createLayout = require('ngraph.layout') // layout of empty graph
-var my_graph = createGraph();
-
-console.log('my graph at init')
-console.log(my_graph)
-
-//var my_layout = createLayout(my_graph);
-// Configure
-var physicsSettings = {
-  timeStep: 0.5,
-  dimensions: 3,
-  gravity: -12,
-  theta: 0.8,
-  springLength: 10,
-  springCoefficient: 0.8,
-  dragCoefficient: 0.9,
-};
-
-// pass it as second argument to layout:
-var my_layout = require('ngraph.forcelayout')(my_graph, physicsSettings);
-console.log('my layout at init:')
-console.log(my_layout)
-
-
-var my_count = 3;
-
+import graph from 'ngraph.graph';
+import forcelayout from 'ngraph.forcelayout';
+const ngraph = { graph, forcelayout };
 
 import Kapsule from 'kapsule';
 import accessorFn from 'accessor-fn';
@@ -620,12 +592,9 @@ export default Kapsule({
   init(threeObj, state) {
     // Main three object to manipulate
     state.graphScene = threeObj;
-    console.log('forcegraph-kapsule init')
   },
 
   update(state, changedProps) {
-
-    console.log('yo yo yo yo yo yo')
     const hasAnyPropChanged = propList => propList.some(p => changedProps.hasOwnProperty(p));
 
     state.engineRunning = false; // pause simulation
@@ -1105,18 +1074,11 @@ export default Kapsule({
         );
       } else {
         // ngraph
-        console.log('ngraph update layout method')
-        ++my_count
-        //console.log('my_graph pre addLink')
-        //  console.log(my_graph)
-        //my_graph.addLink(my_count,my_count-1)
-        //console.log('my_graph post addLink')
-        //console.log(my_graph)
-        //const graph = ngraph.graph();
-        //state.graphData.nodes.forEach(node => { mygraph.addNode(node[state.nodeId]); });
-        state.graphData.links.forEach(link => { my_graph.addLink(link.source, link.target); });
-        //layout = ngraph.forcelayout(mygraph, { dimensions: state.numDimensions, ...state.ngraphPhysics });
-        //layout.graph = mygraph; // Attach graph reference to layout
+        const graph = ngraph.graph();
+        state.graphData.nodes.forEach(node => { graph.addNode(node[state.nodeId]); });
+        state.graphData.links.forEach(link => { graph.addLink(link.source, link.target); });
+        layout = ngraph.forcelayout(graph, { dimensions: state.numDimensions, ...state.ngraphPhysics });
+        layout.graph = graph; // Attach graph reference to layout
       }
 
       for (
@@ -1124,27 +1086,10 @@ export default Kapsule({
         i < state.warmupTicks && !(isD3Sim && state.d3AlphaMin > 0 && state.d3ForceLayout.alpha() < state.d3AlphaMin);
         i++
       ) {
-        //layout[isD3Sim ? "tick" : "step"]();
-        console.log('about to do a step')
-        my_layout["step"]();
+        layout[isD3Sim ? "tick" : "step"]();
       } // Initial ticks before starting to render
 
-//      state.layout = layout;
-      console.log('about to set state.layout: my_graph')
-      console.log(my_graph)
-      console.log('about to set state.layout: my_layout')
-      console.log(my_layout)
-
-      console.log('now setting my_layout.graph = my_graph')
-      my_layout.graph = my_graph
-
-      console.log('this is the state layout prior to update')
-      console.log(state.layout)
-      state.layout = my_layout
-      console.log('this is the new state layout')
-      console.log(state.layout)
-
-
+      state.layout = layout;
       this.resetCountdown();
     }
 
